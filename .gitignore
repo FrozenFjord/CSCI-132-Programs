@@ -1,0 +1,21 @@
+*.class
+out/
+target/
+.idea/
+*.iml
+.DS_Store
+
+__pycache__/
+*.egg-info/
+/internal/scripts/.venv/
+.env
+.claude/*
+!.claude/settings.json
+/internal/students/*/
+
+# Eclipse
+.classpath
+.project
+.settings/
+bin/
+.vscode/

@@ -1,0 +1,30 @@
+name: Anticheat
+on:
+  release:
+    types: [ edited ]
+permissions:
+  contents: read
+  issues: write
+jobs:
+  Anticheat:
+    name: Release Anticheat
+    runs-on: ubuntu-22.04
+
+    steps:
+      - run: |
+          cp $GITHUB_EVENT_PATH release
+      - uses: actions/upload-artifact@v4
+        id: upload-release-diff
+        with:
+          name: Release Diff
+          path: release
+          if-no-files-found: error
+          retention-days: 90
+          overwrite: false
+      - uses: actions/checkout@v3
+      - uses: JasonEtco/create-an-issue@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ARTIFACT_URL: ${{ steps.upload-release-diff.outputs.artifact-url }}
+        with:
+          filename: .github/ANTICHEAT_TEMPLATE.md

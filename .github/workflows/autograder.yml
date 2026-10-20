@@ -1,0 +1,27 @@
+name: MSU Autograder
+permissions:
+  contents: write
+  actions: write
+run-name: Autograde Run
+on: [ push ]
+jobs:
+  Test-Action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '25'
+          check-latest: true
+          cache: 'maven'
+      - run: echo "Job started..."
+      - run: echo "RELEASE=autograder-$(TZ=America/Denver date '+%Y-%m-%d-%H_%M_%S')" >> $GITHUB_ENV
+      - run: python meta/autograder.py run -l > results.md
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ env.RELEASE }}
+          tag_name: ${{ env.RELEASE }}
+          body_path: results.md
+          files: '*.log'
