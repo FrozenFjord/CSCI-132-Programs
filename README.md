@@ -1,12 +1,12 @@
-# CSCI 132 Programs: [Replace with your first and last name]
+# CSCI 132 Programs: Lachlan Mullen
 
 **Montana State University · CSCI 132 · Fall 2026**
 
 ## About Me
 
-- **Name:** [Replace with your first and last name]
-- **GitHub username:** [Replace with your GitHub username]
-- **Major:** [Replace with your major]
+- **Name:** Lachlan Mullen
+- **GitHub username:** FrozenFjord
+- **Major:** Computer Science
 
 ## About This Repository
 
@@ -20,13 +20,14 @@
 
 ## My Setup
 
-- **Operating system:** [Replace with Windows, Mac, or Linux]
-- **Editor:** [Replace with the editor you use: Eclipse, VS Code, IntelliJ, or other]
-- **Java version:** [Replace with your Java version. To find it, type java -version in the terminal]
-- **Terminal I use for git:** [Replace with Git Bash or Terminal]
+- **Operating system:** [Mac
+- **Editor:** VS Code
+- **Java version:** 26.0.2 
+- **Terminal I use for git:** Terminal
 
 ## How to Run a Program
 
 1. [Replace with the first step you take to run a program in your editor, e.g. Open the project in Eclipse]
 2. [Replace with the second step]
 3. [Replace with the third step]
+
