@@ -18,7 +18,7 @@ public class Game {
         discardPile = new Deck();
 
         hand = new ArrayList<>();
-        dealHand();
+        drawCards(6);
 
         input = new Scanner(System.in);
     }
@@ -39,24 +39,27 @@ public class Game {
         System.out.println("We will now deal your cards.");
         
         do {
-            UnoPrinter.printGame(hand, discardPile.peek(), deck.peek(), deck.size());
-
+            
             if (deck.size() == 0 && hand.size() == 0) {
                 System.out.println("You have played every card. YOU WIN!");
                 break;
-            } else if (checkLoseCondition()) {
+            } else if (checkLoseCondition() && hand.size() != 0) {
+                UnoPrinter.printGame(hand, discardPile.peek(), deck.peek(), deck.size());
                 System.out.println("You can play no more cards. You lose...");
                 break;
             }
             
+            if (hand.size() == 0) {
+                drawCards(6);
+            }
+            
+            UnoPrinter.printGame(hand, discardPile.peek(), deck.peek(), deck.size());
+
             System.out.print("Enter a number corresponiding to the card you wish to play: ");
             choice = input.nextInt();
 
             playCard(choice);
-            
-                
-
-        } while (deck.size() != 0);
+        } while (true);
 
         System.out.println("Goodbye!");
     }
@@ -87,40 +90,32 @@ public class Game {
         return drawPile;
     }
 
-    private void dealHand() {
-        for (int i = 0; i < 7; i++) {
-            hand.add(deck.peek());
-            deck.pop();
-        }
-    }
-
     private void playCard(int handIndex) {
         // Catches outOfBound card picks
-        if (handIndex > hand.size()) {
+        if (handIndex > hand.size() ) {
             System.out.println("That is not a valid card number.");
             System.out.print("Pick a new one: ");
-            playCard(input.nextInt() - 1);
+            playCard(input.nextInt());
+            return;
         }
 
         handIndex -= 1;
         Card currentCard = hand.get(handIndex);
         Card topCard = discardPile.peek();
 
-        if (currentCard.getValue() == 'W' || topCard.getValue() == 'W') {
-            hand.remove(currentCard);
-            discardPile.push(currentCard);
-
-        } else if (compareCards(currentCard, topCard)) {
+            if (compareCards(currentCard, topCard)) {
             hand.remove(handIndex);
             discardPile.push(currentCard);
 
-            if (currentCard.getValue() == 'D') {
-                drawCards(2);
-            }
         } else {
             System.out.println("You cannot play a " + currentCard + " on a " + topCard);
             System.out.print("Pick a new one: ");
             playCard(input.nextInt());
+            return;
+        }
+
+        if (currentCard.getValue() == 'D') {
+            drawCards(2);
         }
     }
 
@@ -133,6 +128,10 @@ public class Game {
     
     // Adds cards to hand based on the parameter amount and removes added cards from the deck
     private void drawCards(int amount) {
+        if (amount > deck.size()) {
+            amount = deck.size();
+        }
+
         for (int i = 0; i < amount; i++) {
             hand.add(deck.peek());
             deck.pop();
@@ -147,12 +146,7 @@ public class Game {
 
         for (Card card : hand) {
             // Checks if there are any matching colors or values
-            if (card.getValue() == discard.getValue() || card.getColor() == discard.getColor()) {
-                lose = false;
-            }
-
-            // Checks for wilds
-            if (card.getValue() == 'W' || discard.getValue() == 'W') {
+            if (compareCards(card, discard)) {
                 lose = false;
             }
         }
