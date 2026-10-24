@@ -4,6 +4,7 @@ import main.java.program3.UnoPrinter;
 
 public class UnoDemo {
     public static void main(String[] args) {
-        
+        Game game = new Game();
+        game.userInput();
     }
 }

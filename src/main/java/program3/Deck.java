@@ -1,8 +1,7 @@
 package main.java.program3;
 
 import java.util.LinkedList;
-
-import javax.smartcardio.Card;
+import program3.Card;
 
 public class Deck {
     private LinkedList<Card> deck;
@@ -32,7 +31,7 @@ public class Deck {
         if (isEmpty()) {
             top = null;
         } else {
-            top = data.getFirst();
+            top = deck.getFirst();
         }
     }
     
@@ -45,6 +44,10 @@ public class Deck {
             return true;
         }
         return false;
+    }
+
+    public int size() {
+        return size;
     }
 
     
