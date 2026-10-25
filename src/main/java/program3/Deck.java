@@ -1,3 +1,5 @@
+// Lachlan Mullen
+
 package main.java.program3;
 
 import java.util.LinkedList;

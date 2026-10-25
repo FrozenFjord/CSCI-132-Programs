@@ -1,6 +1,6 @@
-package main.java.program3;
+//Lachlan Mullen
 
-import main.java.program3.UnoPrinter;
+package main.java.program3;
 
 public class UnoDemo {
     public static void main(String[] args) {
