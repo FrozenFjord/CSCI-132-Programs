@@ -35,9 +35,7 @@ public class Game {
         deck.pop();
 
         // Catches when the starting card is a draw
-        if (discardPile.peek().getValue() == 'D') {
-            drawCards(2);
-        }
+        if (discardPile.peek().getValue() == 'D') drawCards(2);
 
         System.out.println("We will now deal your cards.");
         
@@ -54,9 +52,7 @@ public class Game {
             }
             
             // Adds new cards if the player has played all the ones in their hand
-            if (hand.size() == 0) {
-                drawCards(6);
-            }
+            if (hand.size() == 0) drawCards(6);
 
             // Catches when the player has one card left and needs to say uno
             if (hand.size() == 1) {
@@ -145,9 +141,8 @@ public class Game {
 
     // Adds cards to hand based on the parameter amount and removes added cards from the deck
     private void drawCards(int amount) {
-        if (amount > deck.size()) {
-            amount = deck.size();
-        }
+        if (amount > deck.size()) amount = deck.size();
+        
         
         for (int i = 0; i < amount; i++) {
             hand.add(deck.peek());
@@ -160,9 +155,7 @@ public class Game {
         boolean lose = true;
         
         for (Card card : hand) {
-            if (compareCards(card, discardPile.peek())) {
-                lose = false;
-            }
+            if (compareCards(card, discardPile.peek())) lose = false;
         }
         return lose;
     }
