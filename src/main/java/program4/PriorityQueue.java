@@ -5,10 +5,13 @@ import java.util.LinkedList;
 
 public class PriorityQueue {
     private LinkedList<Customer> queue;
+    private LinkedList<Double> waitTimes;
     private int customersServed;
 
     public PriorityQueue() {
         queue = new LinkedList<>();
+        waitTimes = new LinkedList<>();
+        customersServed = 0;
     }
 
     public void enqueue(Customer customer) {
@@ -16,7 +19,13 @@ public class PriorityQueue {
     }
 
     public Customer dequeue() {
-        return queue.poll();
+        Customer customer = queue.poll();
+        long waitTime = System.nanoTime() - customer.getWaitTime();
+
+        customer.setWaitTime(waitTime);
+        waitTimes.add((double) (waitTime / 1_000_000_000.0));
+
+        return customer;
     }
 
     public void customerServed() {
@@ -39,6 +48,17 @@ public class PriorityQueue {
 
     public void printQueueStatistics() {
         // To be implemented
-        System.out.println("Test Queue Statistics");
+        System.out.println("Customers Served: " + customersServed);
+        double averageWaitTime = 0;
+
+        if (!waitTimes.isEmpty()) {
+            double totalWaitTime = 0;
+            for (Double time : waitTimes) {
+                totalWaitTime += time;
+            }
+            averageWaitTime = totalWaitTime / waitTimes.size();
+        } 
+
+        System.out.println("Average Wait Time: " + averageWaitTime);
     }
 }
