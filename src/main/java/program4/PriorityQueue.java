@@ -1,9 +1,11 @@
 // Lachlan Mullen
 package main.java.program4;
 
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Iterator;
 
-public class PriorityQueue {
+public class PriorityQueue implements Iterable<Customer> {
     private LinkedList<Customer> queue;
     private LinkedList<Double> waitTimes;
     private int customersServed;
@@ -16,22 +18,27 @@ public class PriorityQueue {
 
     public void enqueue(Customer customer) {
         queue.add(customer);
+        Collections.sort(queue);
     }
 
     public Customer dequeue() {
         Customer customer = queue.poll();
-        long waitTime = System.nanoTime() - customer.getWaitTime();
-
-        customer.setWaitTime(waitTime);
-        waitTimes.add((double) (waitTime / 1_000_000_000.0));
-
         return customer;
     }
+
+    public void dequeue(Customer customer) {
+        queue.remove(customer);
+    }
+    
 
     public void customerServed() {
         customersServed++;
     }
 
+    public void addWaitTime(double waitTime) {
+        waitTimes.add(waitTime);
+    }
+    
     public boolean isEmpty() {
         return queue.isEmpty();
     }
@@ -40,9 +47,19 @@ public class PriorityQueue {
         return queue.size();
     }
 
+    @Override
+    public Iterator<Customer> iterator() {
+        return queue.iterator();
+    }
+
     public void printQueue() {
-        for (Customer customer : queue) {
-            System.out.println(customer);
+
+        if (queue.isEmpty()) {
+            System.out.println("Queue is empty.");
+        } else {
+            for (Customer customer : queue) {
+                System.out.println(customer);
+            }
         }
     }
 
@@ -59,6 +76,6 @@ public class PriorityQueue {
             averageWaitTime = totalWaitTime / waitTimes.size();
         } 
 
-        System.out.println("Average Wait Time: " + averageWaitTime);
+        System.out.printf("Average Wait Time: %.2f seconds%n", averageWaitTime);
     }
 }

@@ -1,4 +1,5 @@
 // Lachlan Mullen
+package main.java.program4;
 
 import java.lang.Comparable;
 
@@ -59,6 +60,6 @@ public class Customer implements Comparable<Customer> {
 
     @Override
     public String toString() {
-        return name + " - " + order + " - " + waitTime + " - " + isVIP;
+        return name + " - " + order;
     }
 }
